@@ -11,6 +11,7 @@ PAYLOAD = {'openclasses':'N', 'subjcode':'BIO', 'validterm':'201510'}
 
 username = os.environ.get('UCMWUser')
 password = os.environ.get('UCMWPass')
+deptcode = os.environ.get('UCMWDept')
 
 SMTP_SERVER = "smtp.gmail.com"
 
@@ -33,6 +34,11 @@ if not username or not password:
     print 'username or password environmental variable not set'
     print 'set "UCMWUser" and "UCMWPass" and rerun the program'
     quit()
+
+if not deptcode:
+    quit('You must set a department code environmental variable ("UCMWDept")')
+
+PAYLOAD['subjcode'] = deptcode
 
 r = requests.post(URL, data=PAYLOAD, headers={'host':'pbanssb.ucmerced.edu'})
 
